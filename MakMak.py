@@ -4,16 +4,14 @@ import constants
 import functions
 import os
 import random
-import cred
 import urllib
 from requests.exceptions import ReadTimeout
 #from apscheduler.schedulers.background import BackgroundScheduler
 #from apscheduler.triggers.cron import CronTrigger
-import pandas as pd
 import time
 
-for key, value in os.environ.items(): 
-    print (f"{key} = {value}") 
+from keep_alive import keepAlive
+keepAlive() 
 
 from transformers import pipeline 
 generator = pipeline(model="microsoft/DialoGPT-medium")
@@ -22,7 +20,6 @@ try:
     bot = telebot.TeleBot(cred.APIKEY)
 except:
     api_key = os.environ.get('MakMakTelegramBotAPIKey')
-    print (api_key) 
     bot = telebot.TeleBot(api_key)
 
 
