@@ -1,5 +1,5 @@
 import telebot
-from telebot.types import InlineKeyboardButton,InlineKeyboardMarkup,InputMediaAnimation
+from telebot.types import InlineKeyboardButton,InlineKeyboardMarkup
 import constants
 import functions
 import os
@@ -13,10 +13,12 @@ import time
 from keep_alive import keepAlive
 keepAlive() 
 
-from transformers import pipeline 
-print ("loading model")
-generator = pipeline(model="microsoft/DialoGPT-medium")
-print ("model loaded")
+print ("starting the bot...")
+
+# from transformers import pipeline 
+# print ("loading model")
+# generator = pipeline(model="microsoft/DialoGPT-medium")
+# print ("model loaded")
 
 try:
     print ("initializing bot with environment variable")
@@ -265,12 +267,14 @@ def handle_text(message):
 
     print(f'the text:{message.text}')
     reply_message=''
-    conversation = [
-                        {"role": "user", "content": message.text}
-                    ]    
-    responses = generator(conversation) 
-    bot.reply_to(message, responses[0]['generated_text'][1]['content'])
-
+    try:
+        conversation = [
+                            {"role": "user", "content": message.text}
+                        ]    
+        responses = generator(conversation) 
+        bot.reply_to(message, responses[0]['generated_text'][1]['content'])
+    except:
+        bot.reply_to(message,'sorry babe unable to chat now!')
 #***************************************************************************************************************************************************************************************
 
 
