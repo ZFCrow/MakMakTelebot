@@ -14,13 +14,17 @@ from keep_alive import keepAlive
 keepAlive() 
 
 from transformers import pipeline 
+print ("loading model")
 generator = pipeline(model="microsoft/DialoGPT-medium")
+print ("model loaded")
 
 try:
-    bot = telebot.TeleBot(cred.APIKEY)
-except:
+    print ("initializing bot with environment variable")
     api_key = os.environ.get('MakMakTelegramBotAPIKey')
     bot = telebot.TeleBot(api_key)
+except Exception as e: 
+    print (f'Error occured: {e}') 
+    pass 
 
 
 conversationState=0
