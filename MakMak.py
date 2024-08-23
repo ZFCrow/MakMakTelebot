@@ -57,69 +57,8 @@ def UserAuthorization(chatId):
 
 #**********************************************************************Command Handling---------------------------------------------------------------------------
 
-@bot.message_handler(commands=['sendphoto'])
-def send_photo(message):
-    chatId=message.chat.id
-    action='photo command'
-    log(chatId,action)
-    try:
-
-        authorize = UserAuthorization(chatId)
-        if authorize:
-            files=os.listdir('photos')
-
-            #* filepath to be opened in sendphoto
-            photo=f'photos/{random.choice(files)}'
-            bot.send_photo(chat_id=message.chat.id, photo=open(photo,'rb'))
-
-        else:
-             bot.reply_to(message,'you aint authorized to use this function, text the developer to get access.',reply_markup=reply_markupZFCrow)
-    except Exception as e:
-        print(e)
-
-        bot.reply_to(message,'sorry babe function not avail now')
-
-@bot.message_handler(commands=['sendvideo'])
-def send_video(message):
-    chatId=message.chat.id
-    action='video command'
-    log(chatId,action)
-    try:
-        authorize = UserAuthorization(chatId)
-        if authorize:
-            files=os.listdir('videos')
-
-            #* filepath to be opened in sendphoto
-            video=f'videos/{random.choice(files)}'
-            bot.send_video(chat_id=message.chat.id, video=open(video,'rb'))
-
-        else:
-             bot.reply_to(message,'you aint authorized to use this function, text the developer to get access.',reply_markup=reply_markupZFCrow)
-
-    except:
-        bot.reply_to(message,'sorry babe function not avail now')
 
 
-#! functions that cant be used in pytohnanywhere
-#! =====================================================
-@bot.message_handler(commands=['quote'])
-def send_quote(message):
-    chatId=message.chat.id
-    action='quote command'
-    log(chatId,action)
-
-    quote=functions.randomQuote()
-    print(quote)
-
-    bot.reply_to(message, quote)
-
-#! i cant send it over as the file is usually too big
-@bot.message_handler(commands=['yt'])
-def youtubeDownloader(message):
-    chatId=message.chat.id
-    action='youtubeDownloader command'
-    log(chatId,action)
-    bot.reply_to(message,'sorry babe function not avail now')
 
 @bot.message_handler(commands=['bus'])
 def busTiming(message): 
@@ -209,53 +148,6 @@ def handle_sticker(message):
 
 
 
-@bot.message_handler(content_types=["photo"])
-def handle_photo(message):
-    
-    chatId=message.chat.id
-    action='sent a photo'
-    log(chatId,action)
-
-    authorize = UserAuthorization(chatId)
-    if authorize:
-        photoid=message.photo[-1].file_id
-        fileinfo=bot.get_file(photoid)
-        downloadedfile=bot.download_file(fileinfo.file_path)
-        # Save the downloaded photo to your local machine
-        filename=functions.get_unique_filename('photos','downloadedpic.jpg')
-
-        with open(f'photos/{filename}', "wb") as f:
-            f.write(downloadedfile)
-        bot.reply_to(message, "Photo saved to Server")
-    else:
-        bot.reply_to(message,'you aint authorized to save the photo to the server, do text developer to gain access',reply_markup=reply_markupZFCrow)
-
-
-
-
-@bot.message_handler(content_types=['video'])
-def handle_video(message):
-
-    chatId=message.chat.id
-    action='sent a video'
-    log(chatId,action)
-
-
-    authorize = UserAuthorization(chatId)
-    if authorize:
-        video_id = message.video.file_id
-        video_file = bot.get_file(video_id)
-        video_path = video_file.file_path
-        video_url = f'https://api.telegram.org/file/bot{bot.token}/{video_path}'
-        video_name = f'videos/{message.chat.id}_{video_id}.mp4'
-
-        # Download the video
-        urllib.request.urlretrieve(video_url, video_name)
-
-        # Send a message to the user
-        bot.reply_to(message, f'Thank you for the video! It has been saved as {video_name}.')
-    else:
-        bot.reply_to(message,'you aint authorized to save the video to the server, do text developer to gain access',reply_markup=reply_markupZFCrow)
 
 #**********************************************************************Texts Handling---------------------------------------------------------------------------
 @bot.message_handler(content_types=['text'])
@@ -273,6 +165,8 @@ def handle_text(message):
                         ]    
         responses = generator(conversation) 
         bot.reply_to(message, responses[0]['generated_text'][1]['content'])
+
+        
     except:
         bot.reply_to(message,'sorry babe unable to chat now!')
 #***************************************************************************************************************************************************************************************
@@ -358,7 +252,123 @@ def handle_text(message):
 #         bot.reply_to(message,f'what about {response}? {constants.kissingFaceWithClosedEyes}' )
 #     else:
 #         bot.reply_to(message,response )
-#! =================Depricated Functions that are not used anymore======================= 
+
+
+# @bot.message_handler(commands=['sendphoto'])
+# def send_photo(message):
+#     chatId=message.chat.id
+#     action='photo command'
+#     log(chatId,action)
+#     try:
+
+#         authorize = UserAuthorization(chatId)
+#         if authorize:
+#             files=os.listdir('photos')
+
+#             #* filepath to be opened in sendphoto
+#             photo=f'photos/{random.choice(files)}'
+#             bot.send_photo(chat_id=message.chat.id, photo=open(photo,'rb'))
+
+#         else:
+#              bot.reply_to(message,'you aint authorized to use this function, text the developer to get access.',reply_markup=reply_markupZFCrow)
+#     except Exception as e:
+#         print(e)
+
+#         bot.reply_to(message,'sorry babe function not avail now')
+
+# @bot.message_handler(commands=['sendvideo'])
+# def send_video(message):
+#     chatId=message.chat.id
+#     action='video command'
+#     log(chatId,action)
+#     try:
+#         authorize = UserAuthorization(chatId)
+#         if authorize:
+#             files=os.listdir('videos')
+
+#             #* filepath to be opened in sendphoto
+#             video=f'videos/{random.choice(files)}'
+#             bot.send_video(chat_id=message.chat.id, video=open(video,'rb'))
+
+#         else:
+#              bot.reply_to(message,'you aint authorized to use this function, text the developer to get access.',reply_markup=reply_markupZFCrow)
+
+#     except:
+#         bot.reply_to(message,'sorry babe function not avail now')
+
+
+#! the site originally use for quotes has some bot protection, thus i cant use it anymore 
+# @bot.message_handler(commands=['quote'])
+# def send_quote(message):
+#     chatId=message.chat.id
+#     action='quote command'
+#     log(chatId,action)
+
+#     quote=functions.randomQuote()
+#     print(quote)
+
+#     bot.reply_to(message, quote)
+
+#! pytube is buggy after the update, thus i cant use it anymore
+
+# @bot.message_handler(commands=['yt'])
+# def youtubeDownloader(message):
+#     chatId=message.chat.id
+#     action='youtubeDownloader command'
+#     log(chatId,action)
+#     bot.reply_to(message,'sorry babe function not avail now')
+
+
+#! media handlers that i am not using now since i am not storing photos or videos in the server anymore     
+# @bot.message_handler(content_types=["photo"])
+# def handle_photo(message):
+    
+#     chatId=message.chat.id
+#     action='sent a photo'
+#     log(chatId,action)
+
+#     authorize = UserAuthorization(chatId)
+#     if authorize:
+#         photoid=message.photo[-1].file_id
+#         fileinfo=bot.get_file(photoid)
+#         downloadedfile=bot.download_file(fileinfo.file_path)
+#         # Save the downloaded photo to your local machine
+#         filename=functions.get_unique_filename('photos','downloadedpic.jpg')
+
+#         with open(f'photos/{filename}', "wb") as f:
+#             f.write(downloadedfile)
+#         bot.reply_to(message, "Photo saved to Server")
+#     else:
+#         bot.reply_to(message,'you aint authorized to save the photo to the server, do text developer to gain access',reply_markup=reply_markupZFCrow)
+
+
+
+
+# @bot.message_handler(content_types=['video'])
+# def handle_video(message):
+
+#     chatId=message.chat.id
+#     action='sent a video'
+#     log(chatId,action)
+
+
+#     authorize = UserAuthorization(chatId)
+#     if authorize:
+#         video_id = message.video.file_id
+#         video_file = bot.get_file(video_id)
+#         video_path = video_file.file_path
+#         video_url = f'https://api.telegram.org/file/bot{bot.token}/{video_path}'
+#         video_name = f'videos/{message.chat.id}_{video_id}.mp4'
+
+#         # Download the video
+#         urllib.request.urlretrieve(video_url, video_name)
+
+#         # Send a message to the user
+#         bot.reply_to(message, f'Thank you for the video! It has been saved as {video_name}.')
+#     else:
+#         bot.reply_to(message,'you aint authorized to save the video to the server, do text developer to gain access',reply_markup=reply_markupZFCrow)
+
+#! ============================================================================================================== 
 
 
 

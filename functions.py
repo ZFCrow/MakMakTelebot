@@ -164,7 +164,8 @@ def getBusTiming():
 
         res = requests.get(baseURL, headers={'AccountKey': DMkey}, params=param) 
         res.raise_for_status() 
-        
+  
+
         for bus in res.json()['Services']:
             if bus['ServiceNo'] in enquiredPlaces[key][1]:
                 #busesDict[bus['ServiceNo']] = bus['NextBus']['EstimatedArrival']
