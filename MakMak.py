@@ -113,7 +113,7 @@ def randomPick(message):
 
 
 #TODO UNIQLO SCRAPER!
-@bot.message_handler(commands=['uniqloOffers'])
+@bot.message_handler(commands=['uniqlooffers'])
 def uniqlo(message): 
     chatId=message.chat.id
     action='uniqloOffers command'

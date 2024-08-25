@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 def UniqloOffers():
     options = Options()
     options.add_argument("--headless")
-    
+
     driver = webdriver.Chrome(options=options)
 
     driver.get("https://www.uniqlo.com/sg/en/feature/sale/men?path=5856&flagCodes=discount")
@@ -52,7 +52,10 @@ def UniqloOffers():
 
 
     #print (salesDict)
+    driver.close()
+    
     return salesDict
+
 
 if __name__ == "__main__":
     UniqloOffers()
