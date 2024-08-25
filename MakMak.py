@@ -2,6 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardButton,InlineKeyboardMarkup
 import constants
 import functions
+from uniqlo import UniqloOffers
 import os
 import random
 import urllib
@@ -112,6 +113,34 @@ def randomPick(message):
 
 
 #TODO UNIQLO SCRAPER!
+@bot.message_handler(commands=['uniqloOffers'])
+def uniqlo(message): 
+    chatId=message.chat.id
+    action='uniqloOffers command'
+    log(chatId,action)
+
+    offers = UniqloOffers()
+    #print (offers)
+    airismOffers = False 
+    header = f"{'Uniqlo Item':<70} | {'Price'} " 
+    sep = "-"*40
+
+    tabletext = f"```\n{header}\n{sep}\n"
+    for itemName, price in offers.items():
+        if "airism" in itemName.lower():
+            airismOffers = True 
+        
+        tabletext += f"{itemName:<70} | {price}\n"
+
+    tabletext += "```"
+
+
+    if airismOffers:
+        bot.reply_to(message, "Airism has offers now!")
+    bot.reply_to(message,tabletext,parse_mode="Markdown")
+
+
+
 
 
 
