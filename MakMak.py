@@ -58,8 +58,6 @@ def UserAuthorization(chatId):
 #**********************************************************************Command Handling---------------------------------------------------------------------------
 
 
-
-
 @bot.message_handler(commands=['bus'])
 def busTiming(message): 
     chatId=message.chat.id
@@ -67,21 +65,16 @@ def busTiming(message):
     log(chatId,action)
     bus = functions.getBusTiming()
 
-    # for key,value in bus.items():
-    #     bot.reply_to(message,f'{key} : {value}') 
-    # for busStopName, arrivalTimeDict in bus.items(): 
-    #     bot.reply_to(message,busStopName)
-    #     for busNumber, arrivalTime in arrivalTimeDict.items():
-    #         bot.reply_to(message, f"{busNumber}:{arrivalTime}")
-    header = f"{'Bus Stop':<20} | {'Bus Number':<10} | Arrival Time" 
-    sep = "-"*60 
+    header = f"{'Bus Stop':<20} | {'Bus Number':<8} | Arrival Time" 
+    sep = "-"*50
     #! sending it as a table as a string with markdown 
-    #tabletext = "```Bus Stop | Bus Number | Arrival Time"
     tabletext = f"```\n{header}\n{sep}"
     for busStopName, arrivalTimeDict in bus.items():
         for busNumber, arrivalTime in arrivalTimeDict.items():
-            tabletext += f"\n{busStopName:<20} | {busNumber:<10} | {arrivalTime}" 
+            tabletext += f"\n{busStopName:<20} | {busNumber:<8} | {arrivalTime}" 
     tabletext += "```"
+
+
     bot.reply_to(message, tabletext, parse_mode="Markdown") 
 
 
@@ -118,7 +111,7 @@ def randomPick(message):
 
 
 
-
+#TODO UNIQLO SCRAPER!
 
 
 

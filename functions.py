@@ -153,7 +153,6 @@ def getBusTiming():
 
     enquiredPlaces = {'Clementi Bus Int': [17009,['175','282','285']], 'Clementi Exit A':[17171,['78']],'Clementi Exit B':[17179,['201']]}
     baseURL = 'https://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2'
-    #url = 'https://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode=' + str(enquiredPlaces['Clementi Bus Int'][0])
     busesDict = {} 
     DMkey = os.environ.get('dataMallAPIKey')
     for key,value in enquiredPlaces.items():
@@ -164,7 +163,8 @@ def getBusTiming():
 
         res = requests.get(baseURL, headers={'AccountKey': DMkey}, params=param) 
         res.raise_for_status() 
-  
+        # indent 4 
+
 
         for bus in res.json()['Services']:
             if bus['ServiceNo'] in enquiredPlaces[key][1]:
