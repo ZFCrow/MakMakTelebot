@@ -151,7 +151,7 @@ def getBusTiming():
     #nested Dict to store the bus stop code and the buses to enquire
     #! only if its my id, if its jq, 912 and 912a from woodlands
 
-    enquiredPlaces = {'Clementi Bus Int': [17009,['175','282','285']], 'Clementi Exit A':[17171,['78']],'Clementi Exit B':[17179,['201']]}
+    enquiredPlaces = {'Clementi Bus Int': [17009,['175','282','285']], 'Clementi Exit A':[17171,['78']],'Clementi Exit B':[17179,['201']], 'Woodlands Bus Int':[46009,['912','912A']]}
     baseURL = 'https://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2'
     busesDict = {} 
     DMkey = os.environ.get('dataMallAPIKey')
